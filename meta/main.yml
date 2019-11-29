@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  role_name: proxy
+  author: Kálmán Szalai - KAMI
+  description: "Set global proxy setting on your Linux based system"
+  license: MIT
+  min_ansible_version: 2.4
+
+  galaxy_tags:
+    - proxy
+    - system
+
+  platforms:
+    - name: EL
+      versions:
+        - 6
+        - 7
+
+dependencies: []

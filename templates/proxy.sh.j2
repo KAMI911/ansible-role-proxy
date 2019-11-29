@@ -1,0 +1,21 @@
+#!/bin/bash
+
+{% if proxy_http_url | length > 0 %}
+export http_proxy="{{ proxy_http_url }}"
+{% endif %}
+{% if proxy_https_url | length > 0 %}
+export https_proxy="{{ proxy_https_url }}"
+{% endif %}
+{% if proxy_ftp_url | length > 0 %}
+export ftp_proxy="{{ proxy_ftp_url }}"
+{% endif %}
+{% if proxy_socks_url | length > 0 %}
+export socks_proxy="{{ proxy_socks_url }}"
+{% endif %}
+{% if proxy_all_url | length > 0 %}
+export all_proxy="{{ proxy_all_url }}"
+{% endif %}
+
+{% if proxy_no_proxy | length > 0 %}
+export no_proxy="{{ proxy_no_proxy }}"
+{% endif %}

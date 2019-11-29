@@ -1,0 +1,15 @@
+---
+# defaults file for ansible-role-proxy
+
+proxy_http_url: ""  # http://192.168.0.1
+proxy_https_url: ""  # https://192.168.0.1
+proxy_ftp_url: ""
+proxy_socks_url: ""
+proxy_all_url: ""
+
+proxy_yum_url: ""
+
+proxy_yum_username: ""
+proxy_yum_password: ""
+
+proxy_no_proxy: "localhost,127.0.0.1,localaddress"

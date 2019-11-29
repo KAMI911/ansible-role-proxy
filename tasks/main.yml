@@ -1,0 +1,36 @@
+---
+# tasks file for ansible-role-proxy
+
+- name: add proxy to yum
+  lineinfile:
+    dest: /etc/yum.conf
+    line: 'proxy={{ proxy_yum_url }}'
+    regexp: '^[ \t]*proxy[ \t]*=[ \t]*.*'
+    insertafter: '.*distroverpkg.*'
+  tags:
+    - yum_proxy
+
+- name: add proxy username to yum
+  lineinfile:
+    dest: /etc/yum.conf
+    line: 'proxy_username={{ proxy_yum_username }}'
+    regexp: '^[ \t]*proxy_username[ \t]*=[ \t]*.*'
+    insertafter: '^[ \t]*proxy[ \t]*=[ \t]*.*'
+  tags:
+    - yum_proxy
+
+- name: add proxy password to yum
+  lineinfile:
+    dest: /etc/yum.conf
+    line: 'proxy_password={{ proxy_yum_password }}'
+    regexp: '^[ \t]*proxy_password[ \t]*=[ \t]*.*'
+    insertafter: '^[ \t]*proxy[ \t]*=[ \t]*.*'
+  tags:
+    - yum_proxy
+
+- name: 'set global proxy variables'
+  template:
+    src: 'proxy.sh.j2'
+    dest: '/etc/profile.d/proxy.sh'
+    owner: root
+    group: root
