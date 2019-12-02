@@ -7,26 +7,29 @@
     line: 'proxy={{ proxy_yum_url }}'
     regexp: '^[ \t]*proxy[ \t]*=[ \t]*.*'
     insertafter: '.*distroverpkg.*'
+  when: proxy_yum_url | length > 0
   tags:
     - yum_proxy
 
-- name: add proxy username to yum
-  lineinfile:
-    dest: /etc/yum.conf
-    line: 'proxy_username={{ proxy_yum_username }}'
-    regexp: '^[ \t]*proxy_username[ \t]*=[ \t]*.*'
-    insertafter: '^[ \t]*proxy[ \t]*=[ \t]*.*'
-  tags:
-    - yum_proxy
+- block:
+  - name: add proxy username to yum
+    lineinfile:
+      dest: /etc/yum.conf
+      line: 'proxy_username={{ proxy_yum_username }}'
+      regexp: '^[ \t]*proxy_username[ \t]*=[ \t]*.*'
+      insertafter: '^[ \t]*proxy[ \t]*=[ \t]*.*'
+    tags:
+      - yum_proxy
 
-- name: add proxy password to yum
-  lineinfile:
-    dest: /etc/yum.conf
-    line: 'proxy_password={{ proxy_yum_password }}'
-    regexp: '^[ \t]*proxy_password[ \t]*=[ \t]*.*'
-    insertafter: '^[ \t]*proxy[ \t]*=[ \t]*.*'
-  tags:
-    - yum_proxy
+  - name: add proxy password to yum
+    lineinfile:
+      dest: /etc/yum.conf
+      line: 'proxy_password={{ proxy_yum_password }}'
+      regexp: '^[ \t]*proxy_password[ \t]*=[ \t]*.*'
+      insertafter: '^[ \t]*proxy[ \t]*=[ \t]*.*'
+    tags:
+      - yum_proxy
+  when: proxy_yum_username | length > 0
 
 - name: 'set global proxy variables'
   template:
