@@ -11,6 +11,15 @@
   tags:
     - yum_proxy
 
+- name: remove proxy from yum when no proxy_yum_url is specified
+  lineinfile:
+    dest: /etc/yum.conf
+    regexp: '^[ \t]*proxy[ \t]*=[ \t]*.*'
+    state: absent
+  when: proxy_yum_url | length = 0
+  tags:
+    - yum_proxy
+
 - block:
   - name: add proxy username to yum
     lineinfile:
@@ -30,6 +39,24 @@
     tags:
       - yum_proxy
   when: proxy_yum_username | length > 0
+
+- block:
+  - name: remove proxy username from yum when no proxy_yum_username is specified
+    lineinfile:
+      dest: /etc/yum.conf
+      regexp: '^[ \t]*proxy_username[ \t]*=[ \t]*.*'
+    state: absent
+    tags:
+      - yum_proxy
+
+  - name: remove proxy password from yum when no proxy_yum_username is specified
+    lineinfile:
+      dest: /etc/yum.conf
+      regexp: '^[ \t]*proxy_password[ \t]*=[ \t]*.*'
+    state: absent
+    tags:
+      - yum_proxy
+  when: proxy_yum_username | length = 0
 
 - name: 'set global proxy variables'
   template:
