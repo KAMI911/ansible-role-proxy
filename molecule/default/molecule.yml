@@ -6,12 +6,35 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: instance
+  - name: proxy-centos6-all
+    image: centos
+    image_version: centos6
+    groups:
+      - all
+  - name: proxy-centos7
     image: centos:7
+  - name: proxy-centos7-all
+    image: centos:7
+    groups:
+      - all
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  inventory:
+    group_vars:
+      all:
+        proxy_http_url: 'http://192.168.0.1/http'
+        proxy_https_url: 'http://192.168.0.1/https'
+        proxy_ftp_url: 'http://192.168.0.1/ftp'
+        proxy_socks_url: 'http://192.168.0.1/socks'
+        proxy_all_url: 'http://192.168.0.1/all'
+        proxy_yum_url: 'http://192.168.0.1/yum'
+        proxy_yum_username: "testuser"
+        proxy_yum_password: "testpassword"
+        proxy_no_proxy: "localhost,127.0.0.1,localaddress"
+      server-jre:
+        java_type: 'serverjre'
 verifier:
   name: testinfra
   lint:
