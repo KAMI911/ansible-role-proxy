@@ -16,7 +16,7 @@
     dest: /etc/yum.conf
     regexp: '^[ \t]*proxy[ \t]*=[ \t]*.*'
     state: absent
-  when: proxy_yum_url | length = 0
+  when: proxy_yum_url | length == 0
   tags:
     - yum_proxy_remove
 
@@ -56,7 +56,7 @@
       state: absent
     tags:
       - yum_proxy_remove
-  when: proxy_yum_username | length = 0
+  when: proxy_yum_username | length == 0
 
 - name: 'set global proxy variables'
   template:
